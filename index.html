@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Watcher</title>
+    <script>
+        const socket = new WebSocket("ws://localhost:3000");
+
+        socket.onopen = () => {
+            console.log("WebSocket connected!");
+        };
+
+        socket.onmessage = (event) => {
+            const message = JSON.parse(event.data);
+            print(message);
+        };
+
+        function print(message) {
+            const log = document.getElementById("logs");
+            const newLogs = document.createElement("p");
+            newLogs.appendChild(document.createTextNode(message.content));
+            log.appendChild(newLogs);
+        }
+    </script>
+</head>
+<body>
+    <h1>File Watcher Service</h1>
+    <div id="logs"></div>
+</body>
+</html>
